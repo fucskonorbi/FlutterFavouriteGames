@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_favourite_games_app/di/di.dart';
 import 'package:flutter_favourite_games_app/ui/deal_list.dart';
+import 'package:flutter_favourite_games_app/ui/search_page.dart';
 
 void main() {
-  setupInjector();
   WidgetsFlutterBinding.ensureInitialized();
+  // setupInjector();
   runApp(const MyApp());
 }
 
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const SearchPage(),
     );
   }
 }
