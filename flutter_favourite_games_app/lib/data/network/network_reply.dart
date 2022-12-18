@@ -9,11 +9,11 @@ part 'network_reply.g.dart';
 class NetworkReply {
   final List<NetworkDeal> results;
 
-  NetworkReply({
+  const NetworkReply({
     required this.results,
   });
 
-  static final fromJsonFactory = _$NetworkReplyFromJson;
+  static const fromJsonFactory = _$NetworkReplyFromJson;
 
   factory NetworkReply.fromJson(Map<String, dynamic> json) =>
       _$NetworkReplyFromJson(json);

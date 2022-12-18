@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_favourite_games_app/ui/deal_list.dart';
+
+import '../blocs/searched_deals/searched_deals_bloc.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -21,11 +25,21 @@ class SearchPage extends StatelessWidget {
                   hintText: 'Search...', border: OutlineInputBorder()),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const DealList(title: "call")));
+              },
               child: const Text('Let\'s go'),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SearchPage()));
+              },
               child: const Text('See favourites'),
             ),
           ],

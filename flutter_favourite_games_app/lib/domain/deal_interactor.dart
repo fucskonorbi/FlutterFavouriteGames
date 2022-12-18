@@ -2,7 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_favourite_games_app/data/local/deal_disk_datasource.dart';
 import 'package:flutter_favourite_games_app/data/network/deal_network_datasource.dart';
 import 'package:flutter_favourite_games_app/domain/deal.dart';
+import 'package:injectable/injectable.dart';
 
+@singleton
 class DealInteractor {
   final DealNetworkDataSource _dealApiDataSource;
   final DealDiskDataSource _dealDiskDataSource;
@@ -10,7 +12,10 @@ class DealInteractor {
   DealInteractor(this._dealApiDataSource, this._dealDiskDataSource);
 
   Future<List<Deal>?> getAllDeals() async {
-    return await _dealDiskDataSource.getAllDeals();
+    final networkDeals = await _dealApiDataSource.getAllDeals();
+    if (networkDeals == null) return null;
+    await _dealDiskDataSource.saveDeals(networkDeals);
+    return networkDeals;
   }
 
   Future<List<Deal>?> getDealByName(String name) async {

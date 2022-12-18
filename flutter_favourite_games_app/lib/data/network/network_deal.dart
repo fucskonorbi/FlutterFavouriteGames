@@ -19,7 +19,7 @@ class NetworkDeal {
     required this.onSale,
   });
 
-  static final fromJsonFactory = _$NetworkDealFromJson;
+  static const fromJsonFactory = _$NetworkDealFromJson;
 
   factory NetworkDeal.fromJson(Map<String, dynamic> json) =>
       _$NetworkDealFromJson(json);

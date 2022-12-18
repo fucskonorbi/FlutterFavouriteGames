@@ -1,8 +1,11 @@
 import 'package:collection/collection.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_favourite_games_app/data/network/network_deal.dart';
 import 'package:flutter_favourite_games_app/data/network/cheapshark_api.dart';
 import 'package:flutter_favourite_games_app/domain/deal.dart';
+import 'package:injectable/injectable.dart';
 
+@singleton
 class DealNetworkDataSource {
   final DealApiDataSource _dealApiDataSource;
 
@@ -21,6 +24,9 @@ class DealNetworkDataSource {
     final networkResponse = await _dealApiDataSource.getDealsByTitle(title);
     if (networkResponse.response.statusCode != 200) return null;
     final networkDeals = networkResponse.data.results;
+    if (kDebugMode) {
+      print(networkDeals);
+    }
     return networkDeals
         .map((networkDeal) => networkDeal.toDomainModel())
         .toList();
@@ -30,11 +36,11 @@ class DealNetworkDataSource {
 extension on NetworkDeal {
   Deal toDomainModel() {
     return Deal(
-      id: this.id,
-      name: this.name,
-      price: this.price,
-      favorite: this.favorite,
-      onSale: this.onSale,
+      id: id,
+      name: name,
+      price: price,
+      favorite: favorite,
+      onSale: onSale,
     );
   }
 }

@@ -36,14 +36,14 @@ dependencies:
   cupertino_icons: ^1.0.2
   floor: ^1.3.0
   equatable: ^2.0.5
-  floor_generator: ^1.3.0
-  build_runner: ^2.3.2
   retrofit: ^3.0.1+1
   get_it: ^7.2.0
-  json_serializable: ^6.5.4
   dio: ^4.0.6
   json_annotation: ^4.7.0
   path_provider: ^2.0.11
+  flutter_bloc: ^8.1.1
+  provider: ^6.0.5
+  injectable: ^2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +56,11 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   retrofit_generator: ^4.1.2
+  floor_generator: ^1.3.0
+  analysis_options: ^2.0.1
+  json_serializable: ^6.5.4
+  build_runner: ^2.3.2
+  injectable_generator: ^2.1.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

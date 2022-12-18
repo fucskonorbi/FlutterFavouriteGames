@@ -1,7 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_favourite_games_app/data/local/deal_dao.dart';
 import 'package:flutter_favourite_games_app/data/local/floor_deal.dart';
 import 'package:flutter_favourite_games_app/domain/deal.dart';
+import 'package:injectable/injectable.dart';
 
+@singleton
 class DealDiskDataSource {
   final DealDao _dealDao;
 
@@ -12,7 +15,9 @@ class DealDiskDataSource {
       final deals = await _dealDao.getAllDeals();
       return deals.map((deal) => deal.toDomainModel()).toList();
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       return null;
     }
     ;
@@ -23,7 +28,9 @@ class DealDiskDataSource {
       final deals = await _dealDao.getDealsByName(name);
       return deals.map((deal) => deal.toDomainModel()).toList();
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       return null;
     }
     ;
@@ -34,7 +41,9 @@ class DealDiskDataSource {
       await _dealDao
           .insertDeals(deals.map((deal) => deal.toFloorModel()).toList());
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 }
@@ -42,11 +51,11 @@ class DealDiskDataSource {
 extension on FloorDeal {
   Deal toDomainModel() {
     return Deal(
-      id: this.id,
-      name: this.name,
-      price: this.price,
-      favorite: this.favorite,
-      onSale: this.onSale,
+      id: id,
+      name: name,
+      price: price,
+      favorite: favorite,
+      onSale: onSale,
     );
   }
 }
@@ -54,11 +63,11 @@ extension on FloorDeal {
 extension on Deal {
   FloorDeal toFloorModel() {
     return FloorDeal(
-      id: this.id,
-      name: this.name,
-      price: this.price,
-      favorite: this.favorite,
-      onSale: this.onSale,
+      id: id,
+      name: name,
+      price: price,
+      favorite: favorite,
+      onSale: onSale,
     );
   }
 }
