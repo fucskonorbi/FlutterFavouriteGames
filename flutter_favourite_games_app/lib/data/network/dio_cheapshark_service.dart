@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_favourite_games_app/data/network/network_deal.dart';
 import 'package:flutter_favourite_games_app/data/network/network_reply.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
@@ -14,10 +15,10 @@ abstract class DioCheapsharkService implements DealApiDataSource {
 
   @override
   @GET('/deals')
-  Future<HttpResponse<NetworkReply>> getAllDeals();
+  Future<HttpResponse<List<NetworkDeal>>> getAllDeals();
 
   @override
   @GET('/deals')
-  Future<HttpResponse<NetworkReply>> getDealsByTitle(
+  Future<HttpResponse<List<NetworkDeal>>> getDealsByTitle(
       @Query('title') String title);
 }

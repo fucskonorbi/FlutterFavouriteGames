@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_favourite_games_app/data/local/deal_dao.dart';
+import 'package:flutter_favourite_games_app/data/local/floor_database.dart';
 import 'package:flutter_favourite_games_app/data/local/floor_deal.dart';
 import 'package:flutter_favourite_games_app/domain/deal.dart';
 import 'package:injectable/injectable.dart';
@@ -8,7 +9,7 @@ import 'package:injectable/injectable.dart';
 class DealDiskDataSource {
   final DealDao _dealDao;
 
-  DealDiskDataSource(this._dealDao);
+  DealDiskDataSource(FloorDealDatabase database) : _dealDao = database.dealDao;
 
   Future<List<Deal>?> getAllDeals() async {
     try {
@@ -40,6 +41,16 @@ class DealDiskDataSource {
     try {
       await _dealDao
           .insertDeals(deals.map((deal) => deal.toFloorModel()).toList());
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+  }
+
+  Future<void> updateDeal(Deal deal) async {
+    try {
+      await _dealDao.updateDeal(deal.toFloorModel());
     } catch (e) {
       if (kDebugMode) {
         print(e);

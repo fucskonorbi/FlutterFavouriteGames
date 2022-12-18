@@ -16,9 +16,27 @@ class SearchedDealsBloc extends Bloc<SearchedDealsEvent, SearchedDealsState> {
   final DealInteractor _dealInteractor;
 
   SearchedDealsBloc(this._dealInteractor) : super(SearchedDealsLoading()) {
-    on<SearchedDealsSearch>((event, emit) async {
+    on<SearchedDealsSearchEvent>((event, emit) async {
       final deals = await _dealInteractor.getDealByName(event.title);
-      emit(SearchedDealsLoaded(deals!));
+      if (deals == null) {
+        emit(SearchedDealsError());
+        return;
+      }
+      final favorited_deals = await _dealInteractor.getFavouriteDeals();
+      final deals_updated = deals.map((deal) {
+        if (favorited_deals != null) {
+          for (Deal favorited_deal in favorited_deals) {
+            if (favorited_deal.id == deal.id) {
+              return deal.copyWith(favorite: true);
+            }
+          }
+        }
+        return deal;
+      }).toList();
+      emit(SearchedDealsLoaded(deals));
+    });
+    on<SearchedDealsAddToFavouritesEvent>((event, emit) async {
+      await _dealInteractor.addDealToFavourites(event.deal);
     });
   }
 }

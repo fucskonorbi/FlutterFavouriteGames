@@ -5,11 +5,18 @@ abstract class SearchedDealsEvent extends Equatable {
   const SearchedDealsEvent();
 }
 
-class SearchedDealsSearch extends SearchedDealsEvent {
+class SearchedDealsSearchEvent extends SearchedDealsEvent {
   final String title;
-
-  const SearchedDealsSearch(this.title);
+  const SearchedDealsSearchEvent(this.title);
 
   @override
   List<Object> get props => [title];
+}
+
+class SearchedDealsAddToFavouritesEvent extends SearchedDealsEvent {
+  final Deal deal;
+  const SearchedDealsAddToFavouritesEvent(this.deal);
+
+  @override
+  List<Object> get props => [deal];
 }

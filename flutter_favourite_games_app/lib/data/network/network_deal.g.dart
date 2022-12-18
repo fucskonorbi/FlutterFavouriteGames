@@ -7,18 +7,16 @@ part of 'network_deal.dart';
 // **************************************************************************
 
 NetworkDeal _$NetworkDealFromJson(Map<String, dynamic> json) => NetworkDeal(
-      id: json['id'] as int,
-      name: json['name'] as String,
-      price: (json['price'] as num).toDouble(),
-      favorite: json['favorite'] as bool,
-      onSale: json['onSale'] as bool,
+      id: int.parse(json['gameID']),
+      name: json['title'] as String,
+      price: double.parse(json['salePrice']),
+      onSale: json['isOnSale'].toLowerCase() == '1',
     );
 
 Map<String, dynamic> _$NetworkDealToJson(NetworkDeal instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'price': instance.price,
-      'favorite': instance.favorite,
-      'onSale': instance.onSale,
+      'gameID': instance.id,
+      'title': instance.name,
+      'salePrice': instance.price,
+      'isOnSale': instance.onSale,
     };

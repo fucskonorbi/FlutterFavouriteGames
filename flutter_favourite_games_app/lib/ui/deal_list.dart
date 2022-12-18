@@ -22,6 +22,8 @@ class DealList extends StatelessWidget {
         child: BlocBuilder<SearchedDealsBloc, SearchedDealsState>(
           builder: (context, state) {
             if (state is SearchedDealsLoading) {
+              BlocProvider.of<SearchedDealsBloc>(context)
+                  .add(SearchedDealsSearchEvent(title));
               return const Center(
                 child: CircularProgressIndicator(),
               );
@@ -31,9 +33,15 @@ class DealList extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final deal = state.deals[index];
                   return ListTile(
-                    title: Text(deal.name),
-                    subtitle: Text(deal.price.toString()),
-                  );
+                      title: Text(deal.name),
+                      subtitle: Text(deal.price.toString()),
+                      trailing: IconButton(
+                        icon: Icon(Icons.favorite),
+                        onPressed: () {
+                          BlocProvider.of<SearchedDealsBloc>(context)
+                              .add(SearchedDealsAddToFavouritesEvent(deal));
+                        },
+                      ));
                 },
               );
             } else {

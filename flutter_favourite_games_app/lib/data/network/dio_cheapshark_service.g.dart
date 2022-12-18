@@ -21,13 +21,13 @@ class _DioCheapsharkService implements DioCheapsharkService {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<NetworkReply>> getAllDeals() async {
+  Future<HttpResponse<List<NetworkDeal>>> getAllDeals() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<NetworkReply>>(Options(
+    final _result = await _dio.fetch<List<dynamic>>(
+        _setStreamType<HttpResponse<List<NetworkDeal>>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -39,19 +39,21 @@ class _DioCheapsharkService implements DioCheapsharkService {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = NetworkReply.fromJson(_result.data!);
+    var value = _result.data!
+        .map((dynamic i) => NetworkDeal.fromJson(i as Map<String, dynamic>))
+        .toList();
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<NetworkReply>> getDealsByTitle(title) async {
+  Future<HttpResponse<List<NetworkDeal>>> getDealsByTitle(title) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'title': title};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<NetworkReply>>(Options(
+    final _result = await _dio.fetch<List<dynamic>>(
+        _setStreamType<HttpResponse<List<NetworkDeal>>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -63,7 +65,9 @@ class _DioCheapsharkService implements DioCheapsharkService {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = NetworkReply.fromJson(_result.data!);
+    var value = _result.data!
+        .map((dynamic i) => NetworkDeal.fromJson(i as Map<String, dynamic>))
+        .toList();
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }

@@ -1,4 +1,5 @@
 import 'package:floor/floor.dart';
+import 'package:injectable/injectable.dart';
 
 @Entity(tableName: 'deal')
 class FloorDeal {

@@ -5,12 +5,13 @@ abstract class SearchedDealsState extends Equatable {
   const SearchedDealsState();
 }
 
-class SearchedDealsInitial extends SearchedDealsState {
-  @override
-  List<Object> get props => [];
-}
-
 class SearchedDealsLoading extends SearchedDealsState {
+  static const SearchedDealsLoading _instance = SearchedDealsLoading._();
+
+  factory SearchedDealsLoading() => _instance;
+
+  const SearchedDealsLoading._();
+
   @override
   List<Object> get props => [];
 }
@@ -25,6 +26,12 @@ class SearchedDealsLoaded extends SearchedDealsState {
 }
 
 class SearchedDealsError extends SearchedDealsState {
+  static final SearchedDealsError _instance = SearchedDealsError._();
+
+  factory SearchedDealsError() => _instance;
+
+  const SearchedDealsError._();
+
   @override
   List<Object> get props => [];
 }

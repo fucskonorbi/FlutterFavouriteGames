@@ -19,6 +19,13 @@ class DealInteractor {
   }
 
   Future<List<Deal>?> getDealByName(String name) async {
-    return await _dealDiskDataSource.getDealsByName(name);
+    final networkDeals = await _dealApiDataSource.getDealsByName(name);
+    if (networkDeals == null) return null;
+    return networkDeals;
+  }
+
+  Future<void> addDealToFavourites(Deal deal) async {
+    Deal updatedDeal = deal.copyWith(favorite: true);
+    _dealDiskDataSource.updateDeal(updatedDeal);
   }
 }

@@ -1,6 +1,7 @@
 import 'package:floor/floor.dart';
 import 'package:flutter_favourite_games_app/data/local/floor_deal.dart';
 import 'package:flutter_favourite_games_app/data/local/deal_dao.dart';
+import 'package:injectable/injectable.dart';
 
 @dao
 abstract class FloorDealDao implements DealDao {
