@@ -18,11 +18,12 @@ class Loading extends FavouritedState {
 
 class Loaded extends FavouritedState {
   final List<Deal> deals;
+  final bool isSortedHigh;
 
-  const Loaded(this.deals);
+  const Loaded(this.deals, this.isSortedHigh);
 
   @override
-  List<Object> get props => [deals];
+  List<Object> get props => [deals, isSortedHigh];
 }
 
 class Error extends FavouritedState {

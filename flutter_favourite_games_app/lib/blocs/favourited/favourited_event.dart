@@ -7,10 +7,11 @@ abstract class FavouritedEvent extends Equatable {
 
 class FavouriteTapEvent extends FavouritedEvent {
   final Deal deal;
-  const FavouriteTapEvent(this.deal);
+  final bool isSortedHigh;
+  const FavouriteTapEvent(this.deal, this.isSortedHigh);
 
   @override
-  List<Object> get props => [deal];
+  List<Object> get props => [deal, isSortedHigh];
 }
 
 class LoadFavouritesEventSortedHigh extends FavouritedEvent {

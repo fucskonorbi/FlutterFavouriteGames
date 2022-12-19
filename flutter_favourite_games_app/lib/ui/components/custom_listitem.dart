@@ -20,6 +20,10 @@ class CustomListItem extends StatelessWidget {
         tileColor: Theme.of(context).backgroundColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5.0),
+          side: const BorderSide(
+            color: Color(0xFF858585),
+            width: 1,
+          ),
         ),
         contentPadding: const EdgeInsets.all(20),
         title: Text(title,
@@ -36,15 +40,19 @@ class CustomListItem extends StatelessWidget {
         trailing: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20.0),
+            border: Border.all(
+              color:
+                  favorite ? Theme.of(context).backgroundColor : Colors.white,
+              width: favorite ? 2 : 2,
+            ),
             color: favorite
                 ? Theme.of(context).primaryColor
                 : Theme.of(context).backgroundColor,
           ),
           child: IconButton(
-            icon: Icon(Icons.star,
-                color: favorite
-                    ? Theme.of(context).backgroundColor
-                    : Theme.of(context).primaryColor),
+            icon: favorite
+                ? Icon(Icons.star, color: Theme.of(context).backgroundColor)
+                : const Icon(Icons.star_border, color: Colors.white),
             onPressed: () {
               onPressed();
             },

@@ -27,7 +27,7 @@ class FavouritedBloc extends Bloc<FavouritedEvent, FavouritedState> {
         emit(Error());
         return;
       }
-      emit(Loaded(deals));
+      emit(Loaded(deals, event.isSortedHigh));
     });
     on<LoadFavouritesEventSortedHigh>((event, emit) async {
       final deals = await _dealInteractor.getFavouriteDeals();
@@ -36,7 +36,7 @@ class FavouritedBloc extends Bloc<FavouritedEvent, FavouritedState> {
         return;
       }
       deals.sort((a, b) => b.price.compareTo(a.price));
-      emit(Loaded(deals));
+      emit(Loaded(deals, true));
     });
     on<LoadFavouritesEventSortedLow>((event, emit) async {
       final deals = await _dealInteractor.getFavouriteDeals();
@@ -45,7 +45,7 @@ class FavouritedBloc extends Bloc<FavouritedEvent, FavouritedState> {
         return;
       }
       deals.sort((a, b) => a.price.compareTo(b.price));
-      emit(Loaded(deals));
+      emit(Loaded(deals, false));
     });
   }
 }

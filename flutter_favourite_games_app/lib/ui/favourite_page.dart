@@ -7,6 +7,8 @@ import 'package:flutter_favourite_games_app/ui/components/custom_button.dart';
 import 'package:flutter_favourite_games_app/ui/components/custom_listitem.dart';
 import 'package:flutter_favourite_games_app/ui/deal_list.dart';
 
+import 'components/buttons_select.dart';
+
 class FavouritePage extends StatelessWidget {
   const FavouritePage({Key? key}) : super(key: key);
 
@@ -26,13 +28,13 @@ class FavouritePage extends StatelessWidget {
             builder: (context, state) {
               if (state is Loading) {
                 BlocProvider.of<FavouritedBloc>(context)
-                    .add(const LoadFavouritesEventSortedHigh());
+                    .add(const LoadFavouritesEventSortedLow());
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
               } else if (state is Loaded) {
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.fromLTRB(30, 20, 30, 20),
                   child: Column(
                     children: [
                       const Padding(
@@ -47,9 +49,9 @@ class FavouritePage extends StatelessWidget {
                           softWrap: true,
                         ),
                       ),
-                      const Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
-                        child: ButtonSelectionWidget(true),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 30),
+                        child: ButtonSelectionWidget(state.isSortedHigh),
                       ),
                       Expanded(
                         child: ListView.builder(
@@ -65,7 +67,8 @@ class FavouritePage extends StatelessWidget {
                                   favorite: deal.favorite,
                                   onPressed: () {
                                     BlocProvider.of<FavouritedBloc>(context)
-                                        .add(FavouriteTapEvent(deal));
+                                        .add(FavouriteTapEvent(
+                                            deal, state.isSortedHigh));
                                   }),
                             );
                           },
@@ -75,7 +78,8 @@ class FavouritePage extends StatelessWidget {
                         color: Theme.of(context).primaryColor,
                         text: "Go back to search",
                         onPressed: () {
-                          Navigator.pop(context);
+                          Navigator.of(context)
+                              .popUntil((route) => route.isFirst);
                         },
                       )
                     ],
@@ -89,82 +93,6 @@ class FavouritePage extends StatelessWidget {
             },
           ),
         ),
-      ),
-    );
-  }
-}
-
-class ButtonSelectionWidget extends StatelessWidget {
-  final bool leftSelected;
-  const ButtonSelectionWidget(this.leftSelected, {Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 60,
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
-        color: Colors.white,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Expanded(
-            flex: 1,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: leftSelected
-                      ? Theme.of(context).primaryColor
-                      : Colors.white,
-                ),
-                child: TextButton(
-                  onPressed: () {
-                    BlocProvider.of<FavouritedBloc>(context)
-                        .add(const LoadFavouritesEventSortedLow());
-                  },
-                  child: Text('Lowest price',
-                      style: TextStyle(
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Roboto')),
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: leftSelected
-                      ? Colors.white
-                      : Theme.of(context).primaryColor,
-                ),
-                child: TextButton(
-                  onPressed: () {
-                    BlocProvider.of<FavouritedBloc>(context)
-                        .add(const LoadFavouritesEventSortedHigh());
-                  },
-                  child: Text(
-                    'Highest price',
-                    style: TextStyle(
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Roboto'),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
