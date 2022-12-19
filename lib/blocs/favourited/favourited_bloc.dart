@@ -27,6 +27,11 @@ class FavouritedBloc extends Bloc<FavouritedEvent, FavouritedState> {
         emit(Error());
         return;
       }
+      if (event.isSortedHigh) {
+        deals.sort((a, b) => b.price.compareTo(a.price));
+      } else {
+        deals.sort((a, b) => a.price.compareTo(b.price));
+      }
       emit(Loaded(deals, event.isSortedHigh));
     });
     on<LoadFavouritesEventSortedHigh>((event, emit) async {
