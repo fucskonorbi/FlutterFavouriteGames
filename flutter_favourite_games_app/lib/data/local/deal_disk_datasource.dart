@@ -57,6 +57,26 @@ class DealDiskDataSource {
       }
     }
   }
+
+  Future<void> removeDeal(Deal deal) async {
+    try {
+      await _dealDao.deleteDeal(deal.toFloorModel());
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+  }
+
+  Future<void> addDeal(Deal deal) async {
+    try {
+      await _dealDao.insertDeals([deal.toFloorModel()]);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+  }
 }
 
 extension on FloorDeal {

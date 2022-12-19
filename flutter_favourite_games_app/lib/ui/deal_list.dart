@@ -36,10 +36,13 @@ class DealList extends StatelessWidget {
                       title: Text(deal.name),
                       subtitle: Text(deal.price.toString()),
                       trailing: IconButton(
-                        icon: Icon(Icons.favorite),
+                        icon: Icon(Icons.favorite,
+                            color: deal.favorite ? Colors.red : Colors.grey),
                         onPressed: () {
                           BlocProvider.of<SearchedDealsBloc>(context)
-                              .add(SearchedDealsAddToFavouritesEvent(deal));
+                              .add(SearchedDealsFavouriteTapEvent(deal));
+                          BlocProvider.of<SearchedDealsBloc>(context)
+                              .add(SearchedDealsSearchEvent(title));
                         },
                       ));
                 },

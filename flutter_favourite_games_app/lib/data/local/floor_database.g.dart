@@ -85,7 +85,7 @@ class _$FloorDealDatabase extends FloorDealDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `deal` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `price` REAL NOT NULL, `favorite` INTEGER NOT NULL, `onSale` INTEGER NOT NULL, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `new_deals` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `price` REAL NOT NULL, `favorite` INTEGER NOT NULL, `onSale` INTEGER NOT NULL, PRIMARY KEY (`id`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -106,7 +106,7 @@ class _$FloorDealDao extends FloorDealDao {
   )   : _queryAdapter = QueryAdapter(database),
         _floorDealInsertionAdapter = InsertionAdapter(
             database,
-            'deal',
+            'new_deals',
             (FloorDeal item) => <String, Object?>{
                   'id': item.id,
                   'name': item.name,
@@ -116,7 +116,7 @@ class _$FloorDealDao extends FloorDealDao {
                 }),
         _floorDealUpdateAdapter = UpdateAdapter(
             database,
-            'deal',
+            'new_deals',
             ['id'],
             (FloorDeal item) => <String, Object?>{
                   'id': item.id,
@@ -127,7 +127,7 @@ class _$FloorDealDao extends FloorDealDao {
                 }),
         _floorDealDeletionAdapter = DeletionAdapter(
             database,
-            'deal',
+            'new_deals',
             ['id'],
             (FloorDeal item) => <String, Object?>{
                   'id': item.id,
@@ -151,7 +151,7 @@ class _$FloorDealDao extends FloorDealDao {
 
   @override
   Future<List<FloorDeal>> getAllDeals() async {
-    return _queryAdapter.queryList('SELECT * FROM deals',
+    return _queryAdapter.queryList('SELECT * FROM new_deals',
         mapper: (Map<String, Object?> row) => FloorDeal(
             id: row['id'] as int,
             name: row['name'] as String,
@@ -162,7 +162,7 @@ class _$FloorDealDao extends FloorDealDao {
 
   @override
   Future<List<FloorDeal>> getDealsByName(String name) async {
-    return _queryAdapter.queryList('SELECT * FROM deals WHERE name = ?1',
+    return _queryAdapter.queryList('SELECT * FROM new_deals WHERE name = ?1',
         mapper: (Map<String, Object?> row) => FloorDeal(
             id: row['id'] as int,
             name: row['name'] as String,

@@ -26,6 +26,16 @@ class DealInteractor {
 
   Future<void> addDealToFavourites(Deal deal) async {
     Deal updatedDeal = deal.copyWith(favorite: true);
-    _dealDiskDataSource.updateDeal(updatedDeal);
+    await _dealDiskDataSource.addDeal(updatedDeal);
+  }
+
+  Future<void> removeDealFromFavourites(Deal deal) async {
+    await _dealDiskDataSource.removeDeal(deal);
+  }
+
+  Future<List<Deal>?> getFavouriteDeals() async {
+    final deals = await _dealDiskDataSource.getAllDeals();
+    if (deals == null) return null;
+    return deals.toList();
   }
 }

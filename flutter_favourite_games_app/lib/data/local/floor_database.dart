@@ -17,7 +17,7 @@ abstract class FloorDealDatabase extends FloorDatabase {
   @preResolve
   static Future<FloorDealDatabase> createDatabase() async {
     final database =
-        await $FloorFloorDealDatabase.databaseBuilder('deals.db').build();
+        await $FloorFloorDealDatabase.databaseBuilder('deals_new_2.db').build();
     return database;
   }
 }

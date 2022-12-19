@@ -6,11 +6,11 @@ import 'package:injectable/injectable.dart';
 @dao
 abstract class FloorDealDao implements DealDao {
   @override
-  @Query('SELECT * FROM deals')
+  @Query('SELECT * FROM new_deals')
   Future<List<FloorDeal>> getAllDeals();
 
   @override
-  @Query('SELECT * FROM deals WHERE name = :name')
+  @Query('SELECT * FROM new_deals WHERE name = :name')
   Future<List<FloorDeal>> getDealsByName(String name);
 
   @override

@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_favourite_games_app/data/network/dio_cheapshark_service.dart';
 import 'package:flutter_favourite_games_app/domain/deal_interactor.dart';
 import 'package:injectable/injectable.dart';
@@ -23,6 +24,7 @@ class SearchedDealsBloc extends Bloc<SearchedDealsEvent, SearchedDealsState> {
         return;
       }
       final favorited_deals = await _dealInteractor.getFavouriteDeals();
+      debugPrint("favorited_deals: ${favorited_deals}");
       final deals_updated = deals.map((deal) {
         if (favorited_deals != null) {
           for (Deal favorited_deal in favorited_deals) {
@@ -33,10 +35,15 @@ class SearchedDealsBloc extends Bloc<SearchedDealsEvent, SearchedDealsState> {
         }
         return deal;
       }).toList();
-      emit(SearchedDealsLoaded(deals));
+      emit(SearchedDealsLoaded(deals_updated));
     });
-    on<SearchedDealsAddToFavouritesEvent>((event, emit) async {
-      await _dealInteractor.addDealToFavourites(event.deal);
+    on<SearchedDealsFavouriteTapEvent>((event, emit) async {
+      debugPrint("SearchedDealsAddToFavouritesEvent: ${event.deal.name}");
+      if (event.deal.favorite) {
+        await _dealInteractor.removeDealFromFavourites(event.deal);
+      } else {
+        await _dealInteractor.addDealToFavourites(event.deal);
+      }
     });
   }
 }

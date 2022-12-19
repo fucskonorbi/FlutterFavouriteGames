@@ -17,7 +17,6 @@ class DealNetworkDataSource {
     final networkResponse = await _dealApiDataSource.getAllDeals();
     if (networkResponse.response.statusCode == 200) return null;
     final networkDeals = networkResponse.response.data;
-    debugPrint(networkDeals.toString());
     return networkDeals
         ?.map((networkDeal) => networkDeal.toDomainModel())
         .toList();
@@ -27,7 +26,6 @@ class DealNetworkDataSource {
     final networkResponse = await _dealApiDataSource.getDealsByTitle(title);
     if (networkResponse.response.statusCode != 200) return null;
     final networkDealsData = networkResponse.response.data;
-    debugPrint(networkDealsData.toString());
     final networkDeals = networkDealsData
         ?.map((networkDealData) => NetworkDeal.fromJson(networkDealData))
         .toList();

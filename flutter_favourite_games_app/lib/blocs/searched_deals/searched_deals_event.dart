@@ -13,9 +13,9 @@ class SearchedDealsSearchEvent extends SearchedDealsEvent {
   List<Object> get props => [title];
 }
 
-class SearchedDealsAddToFavouritesEvent extends SearchedDealsEvent {
+class SearchedDealsFavouriteTapEvent extends SearchedDealsEvent {
   final Deal deal;
-  const SearchedDealsAddToFavouritesEvent(this.deal);
+  const SearchedDealsFavouriteTapEvent(this.deal);
 
   @override
   List<Object> get props => [deal];
