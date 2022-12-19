@@ -6,8 +6,10 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:dio/dio.dart' as _i3;
-import 'package:flutter_favourite_games_app/blocs/searched_deals/searched_deals_bloc.dart'
+import 'package:flutter_favourite_games_app/blocs/favourited/favourited_bloc.dart'
     as _i10;
+import 'package:flutter_favourite_games_app/blocs/searched_deals/searched_deals_bloc.dart'
+    as _i11;
 import 'package:flutter_favourite_games_app/data/local/deal_disk_datasource.dart'
     as _i7;
 import 'package:flutter_favourite_games_app/data/local/floor_database.dart'
@@ -18,7 +20,7 @@ import 'package:flutter_favourite_games_app/data/network/deal_network_datasource
     as _i8;
 import 'package:flutter_favourite_games_app/data/network/dio_cheapshark_service.dart'
     as _i6;
-import 'package:flutter_favourite_games_app/di/network_module.dart' as _i11;
+import 'package:flutter_favourite_games_app/di/network_module.dart' as _i12;
 import 'package:flutter_favourite_games_app/domain/deal_interactor.dart' as _i9;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
@@ -52,10 +54,12 @@ extension GetItInjectableX on _i1.GetIt {
       gh<_i8.DealNetworkDataSource>(),
       gh<_i7.DealDiskDataSource>(),
     ));
-    gh.factory<_i10.SearchedDealsBloc>(
-        () => _i10.SearchedDealsBloc(gh<_i9.DealInteractor>()));
+    gh.factory<_i10.FavouritedBloc>(
+        () => _i10.FavouritedBloc(gh<_i9.DealInteractor>()));
+    gh.factory<_i11.SearchedDealsBloc>(
+        () => _i11.SearchedDealsBloc(gh<_i9.DealInteractor>()));
     return this;
   }
 }
 
-class _$NetworkModule extends _i11.NetworkModule {}
+class _$NetworkModule extends _i12.NetworkModule {}

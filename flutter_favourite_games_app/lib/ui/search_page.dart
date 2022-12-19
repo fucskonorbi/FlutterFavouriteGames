@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_favourite_games_app/ui/deal_list.dart';
+import 'package:flutter_favourite_games_app/ui/favourite_page.dart';
 
 import '../blocs/searched_deals/searched_deals_bloc.dart';
 
@@ -29,7 +30,7 @@ class SearchPage extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const DealList(title: "call")));
+                        builder: (context) => const DealList(title: "league")));
               },
               child: const Text('Let\'s go'),
             ),
@@ -38,7 +39,7 @@ class SearchPage extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const SearchPage()));
+                        builder: (context) => const FavouritePage()));
               },
               child: const Text('See favourites'),
             ),
