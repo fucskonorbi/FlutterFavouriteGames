@@ -18,11 +18,7 @@ class FavouritePage extends StatelessWidget {
       create: (context) => injector<FavouritedBloc>(),
       child: SafeArea(
         child: Scaffold(
-          appBar: AppBar(
-            title: const Text(
-              'Favourite games',
-            ),
-          ),
+          resizeToAvoidBottomInset: false,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           body: BlocBuilder<FavouritedBloc, FavouritedState>(
             builder: (context, state) {

@@ -14,9 +14,7 @@ class SearchPage extends StatelessWidget {
     final textController = TextEditingController();
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Search for game title'),
-        ),
+        resizeToAvoidBottomInset: false,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -25,9 +23,21 @@ class SearchPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Padding(
-                padding: EdgeInsets.fromLTRB(5, 40, 5, 40),
+                padding: EdgeInsets.fromLTRB(5, 40, 5, 5),
                 child: Text(
-                  'Search for a game title',
+                  'Search for a',
+                  style: TextStyle(
+                      fontSize: 52,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontFamily: 'Roboto'),
+                  softWrap: true,
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(5, 0, 5, 60),
+                child: Text(
+                  'game title',
                   style: TextStyle(
                       fontSize: 52,
                       fontWeight: FontWeight.bold,
@@ -37,7 +47,7 @@ class SearchPage extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 70),
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 130),
                 child: TextFormField(
                   controller: textController,
                   style: const TextStyle(

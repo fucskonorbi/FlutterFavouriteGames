@@ -16,95 +16,95 @@ class DealList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: BlocProvider(
-        create: (context) => injector<SearchedDealsBloc>(),
-        child: BlocBuilder<SearchedDealsBloc, SearchedDealsState>(
-          builder: (context, state) {
-            if (state is SearchedDealsLoading) {
-              BlocProvider.of<SearchedDealsBloc>(context)
-                  .add(SearchedDealsSearchEvent(title));
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (state is SearchedDealsLoaded) {
-              return Padding(
-                padding: const EdgeInsets.fromLTRB(30, 20, 30, 20),
-                child: Column(
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
-                      child: Text(
-                        'Search results for',
-                        style: TextStyle(
-                            fontSize: 34,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontFamily: 'Roboto'),
-                        softWrap: true,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 5, 0, 30),
-                      child: Text(
-                        "$title...",
-                        style: TextStyle(
-                            fontSize: 34,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).primaryColor,
-                            fontFamily: 'Roboto'),
-                        softWrap: true,
-                      ),
-                    ),
-                    Flexible(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ListView.builder(
-                          itemCount: state.deals.length,
-                          itemBuilder: (context, index) {
-                            final deal = state.deals[index];
-                            return Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                              child: CustomListItem(
-                                title: deal.name,
-                                subtitle: "\$${deal.price.toString()}",
-                                favorite: deal.favorite,
-                                onPressed: () {
-                                  BlocProvider.of<SearchedDealsBloc>(context)
-                                      .add(
-                                          SearchedDealsFavouriteTapEvent(deal));
-                                  BlocProvider.of<SearchedDealsBloc>(context)
-                                      .add(SearchedDealsSearchEvent(title));
-                                },
-                              ),
-                            );
-                          },
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        body: BlocProvider(
+          create: (context) => injector<SearchedDealsBloc>(),
+          child: BlocBuilder<SearchedDealsBloc, SearchedDealsState>(
+            builder: (context, state) {
+              if (state is SearchedDealsLoading) {
+                BlocProvider.of<SearchedDealsBloc>(context)
+                    .add(SearchedDealsSearchEvent(title));
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (state is SearchedDealsLoaded) {
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(30, 20, 30, 20),
+                  child: Column(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                        child: Text(
+                          'Search results for',
+                          style: TextStyle(
+                              fontSize: 34,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Roboto'),
+                          softWrap: true,
                         ),
                       ),
-                    ),
-                    CustomButton(
-                      color: Theme.of(context).primaryColor,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const FavouritePage(),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 5, 0, 30),
+                        child: Text(
+                          "$title...",
+                          style: TextStyle(
+                              fontSize: 34,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).primaryColor,
+                              fontFamily: 'Roboto'),
+                          softWrap: true,
+                        ),
+                      ),
+                      Flexible(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ListView.builder(
+                            itemCount: state.deals.length,
+                            itemBuilder: (context, index) {
+                              final deal = state.deals[index];
+                              return Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+                                child: CustomListItem(
+                                  title: deal.name,
+                                  subtitle: "\$${deal.price.toString()}",
+                                  favorite: deal.favorite,
+                                  onPressed: () {
+                                    BlocProvider.of<SearchedDealsBloc>(context)
+                                        .add(SearchedDealsFavouriteTapEvent(
+                                            deal));
+                                    BlocProvider.of<SearchedDealsBloc>(context)
+                                        .add(SearchedDealsSearchEvent(title));
+                                  },
+                                ),
+                              );
+                            },
                           ),
-                        );
-                      },
-                      text: 'See favorites',
-                    )
-                  ],
-                ),
-              );
-            } else {
-              return Container();
-            }
-          },
+                        ),
+                      ),
+                      CustomButton(
+                        color: Theme.of(context).primaryColor,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const FavouritePage(),
+                            ),
+                          );
+                        },
+                        text: 'See favorites',
+                      )
+                    ],
+                  ),
+                );
+              } else {
+                return Container();
+              }
+            },
+          ),
         ),
       ),
     );
