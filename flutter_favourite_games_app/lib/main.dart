@@ -5,6 +5,7 @@ import 'package:flutter_favourite_games_app/data/network/dio_cheapshark_service.
 import 'package:flutter_favourite_games_app/di/di.dart';
 import 'package:flutter_favourite_games_app/ui/deal_list.dart';
 import 'package:flutter_favourite_games_app/ui/search_page.dart';
+import 'package:flutter_favourite_games_app/ui/theme.dart';
 import 'package:get_it/get_it.dart';
 
 void main() {
@@ -26,9 +27,7 @@ class MyApp extends StatelessWidget {
       builder: (context, snapshot) {
         return MaterialApp(
           title: 'Game Deals',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
+          theme: theme(),
           home: const SearchPage(),
           onGenerateRoute: (settings) {
             final name = settings.name ?? '';

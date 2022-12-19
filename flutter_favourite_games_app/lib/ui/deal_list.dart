@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_favourite_games_app/data/network/dio_cheapshark_service.dart';
 import 'package:flutter_favourite_games_app/domain/deal_interactor.dart';
 import 'package:flutter_favourite_games_app/di/di.dart';
+import 'package:flutter_favourite_games_app/ui/components/custom_listitem.dart';
 
 import '../blocs/searched_deals/searched_deals_bloc.dart';
 
@@ -15,8 +16,9 @@ class DealList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Valami"),
+        title: Text(title),
       ),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: BlocProvider(
         create: (context) => injector<SearchedDealsBloc>(),
         child: BlocBuilder<SearchedDealsBloc, SearchedDealsState>(
@@ -32,19 +34,17 @@ class DealList extends StatelessWidget {
                 itemCount: state.deals.length,
                 itemBuilder: (context, index) {
                   final deal = state.deals[index];
-                  return ListTile(
-                      title: Text(deal.name),
-                      subtitle: Text(deal.price.toString()),
-                      trailing: IconButton(
-                        icon: Icon(Icons.favorite,
-                            color: deal.favorite ? Colors.red : Colors.grey),
-                        onPressed: () {
-                          BlocProvider.of<SearchedDealsBloc>(context)
-                              .add(SearchedDealsFavouriteTapEvent(deal));
-                          BlocProvider.of<SearchedDealsBloc>(context)
-                              .add(SearchedDealsSearchEvent(title));
-                        },
-                      ));
+                  return CustomListItem(
+                    title: deal.name,
+                    subtitle: "\$${deal.price.toString()}",
+                    favorite: deal.favorite,
+                    onPressed: () {
+                      BlocProvider.of<SearchedDealsBloc>(context)
+                          .add(SearchedDealsFavouriteTapEvent(deal));
+                      BlocProvider.of<SearchedDealsBloc>(context)
+                          .add(SearchedDealsSearchEvent(title));
+                    },
+                  );
                 },
               );
             } else {
